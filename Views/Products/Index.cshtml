@@ -1,0 +1,92 @@
+﻿@model PagedList.IPagedList<Application.Models.Product>
+
+@{
+    ViewBag.Title = "Товары";
+}
+
+<h2>Товары</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Поиск товара: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string) &nbsp;
+        <input type="submit" value="Поиск" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Код", "Index", new { sortProducts = ViewBag.CodeSortParm, currentFilter = ViewBag.CurrentFilter, page = Model.PageNumber })
+        </th>
+        <th>
+            @Html.ActionLink("Название", "Index", new { sortProducts = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, page = Model.PageNumber })
+        </th>
+        <th>
+            @Html.ActionLink("Цена", "Index", new { sortProducts = ViewBag.PriceSortParm, currentFilter = ViewBag.CurrentFilter, page = Model.PageNumber })
+        </th>
+        <th>
+            @Html.ActionLink("Категория", "Index", new { sortProducts = ViewBag.CategorySortParm, currentFilter = ViewBag.CurrentFilter, page = Model.PageNumber })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
+
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("⏪", "Index", new { page = 1, sortProducts = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+        @Html.Raw(" ");
+        @Html.ActionLink("◀️", "Index", new { page = Model.PageNumber - 1, sortProducts = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+    }
+    else
+    {
+        @:⏪
+        @Html.Raw(" ");
+        @:◀️
+    }
+
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("▶️", "Index", new { page = Model.PageNumber + 1, sortProducts = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+        @Html.Raw(" ");
+        @Html.ActionLink("⏩", "Index", new { page = Model.PageCount, sortProducts = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+    }
+    else
+    {
+        @:▶️
+        @Html.Raw(" ")
+        @:⏩
+    }
+</div>
