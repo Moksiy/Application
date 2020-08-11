@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Collections.Specialized;
 
-namespace Application.Models
+namespace Application
 {
-    public class MvMembershipProvider : MembershipProvider
+    public class MyMembershipProvider : MembershipProvider
     {
+        private string GetConfigValue(string configValue, string defaultValue)
+        {
+            return (string.IsNullOrEmpty(configValue)) ? defaultValue : configValue;
+        }
+
+        private string _ApplicationName;
+        private bool _EnablePasswordReset;
+        private bool _EnablePasswordRetrieval = false;
+        private bool _RequiresQuestionAndAnswer = false;
+        private bool _RequiresUniqueEmail = true;
+
         public override bool EnablePasswordRetrieval => throw new NotImplementedException();
 
         public override bool EnablePasswordReset => throw new NotImplementedException();

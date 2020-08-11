@@ -65,6 +65,8 @@
       <HintPath>packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -188,16 +190,38 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomMembership.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomMembership.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomMembership.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomMembership.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomMembership.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomMembership.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="App_Data\MvMembershipProvider.cs" />
+    <Compile Include="App_Data\MyMembershipProvider.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderElement.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Users.cs">
+      <DependentUpon>CustomMembership.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CustomMembership.mdf" />
+    <Content Include="App_Data\CustomMembership_log.ldf">
+      <DependentUpon>CustomMembership.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -206,6 +230,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\CustomMembership.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CustomMembership.Context.cs</LastGenOutput>
+      <DependentUpon>CustomMembership.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\CustomMembership.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CustomMembership.edmx</DependentUpon>
+      <LastGenOutput>CustomMembership.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Views\Products\Create.cshtml" />
@@ -213,6 +247,13 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <EntityDeploy Include="Models\CustomMembership.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CustomMembership.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CustomMembership.edmx.diagram">
+      <DependentUpon>CustomMembership.edmx</DependentUpon>
+    </Content>
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -277,7 +318,9 @@
     <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
     <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
